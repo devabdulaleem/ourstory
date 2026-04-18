@@ -562,18 +562,33 @@ function startReunionCountdown() {
 const musicBtn = document.getElementById('music-btn');
 const nasheedAudio = document.getElementById('nasheed-audio');
 let isPlaying = false;
+let audioLoaded = false;
 
 musicBtn.addEventListener('click', () => {
+    if (!nasheedAudio) {
+        console.warn('Audio element not found');
+        return;
+    }
+
     if (!isPlaying) {
-        nasheedAudio.play().then(() => {
-            isPlaying = true;
-            musicBtn.classList.add('playing');
-            musicBtn.textContent = '🎶';
-        }).catch(() => {
-            // Audio file not found — show hint
-            musicBtn.textContent = '❌';
-            setTimeout(() => { musicBtn.textContent = '🎵'; }, 2000);
-        });
+        // Load first time, then play
+        if (!audioLoaded) {
+            nasheedAudio.load();
+            audioLoaded = true;
+        }
+        nasheedAudio.volume = 1;
+        const playPromise = nasheedAudio.play();
+        if (playPromise !== undefined) {
+            playPromise.then(() => {
+                isPlaying = true;
+                musicBtn.classList.add('playing');
+                musicBtn.textContent = '🎶';
+            }).catch(err => {
+                console.error('Audio play failed:', err);
+                musicBtn.textContent = '❌';
+                setTimeout(() => { musicBtn.textContent = '🎵'; }, 2000);
+            });
+        }
     } else {
         nasheedAudio.pause();
         isPlaying = false;
@@ -581,6 +596,15 @@ musicBtn.addEventListener('click', () => {
         musicBtn.textContent = '🎵';
     }
 });
+
+// Reset state when audio ends (in case loop fails)
+if (nasheedAudio) {
+    nasheedAudio.addEventListener('ended', () => {
+        isPlaying = false;
+        musicBtn.classList.remove('playing');
+        musicBtn.textContent = '🎵';
+    });
+}
 
 // ==================== NIKAH ANNIVERSARY COUNTER ====================
 function startNikahCounter() {
