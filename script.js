@@ -562,7 +562,6 @@ function startReunionCountdown() {
 const musicBtn = document.getElementById('music-btn');
 const nasheedAudio = document.getElementById('nasheed-audio');
 let isPlaying = false;
-let audioLoaded = false;
 
 musicBtn.addEventListener('click', () => {
     if (!nasheedAudio) {
@@ -571,20 +570,16 @@ musicBtn.addEventListener('click', () => {
     }
 
     if (!isPlaying) {
-        // Load first time, then play
-        if (!audioLoaded) {
-            nasheedAudio.load();
-            audioLoaded = true;
-        }
         nasheedAudio.volume = 1;
+        isPlaying = true;
+        musicBtn.classList.add('playing');
+        musicBtn.textContent = '🎶';
         const playPromise = nasheedAudio.play();
         if (playPromise !== undefined) {
-            playPromise.then(() => {
-                isPlaying = true;
-                musicBtn.classList.add('playing');
-                musicBtn.textContent = '🎶';
-            }).catch(err => {
+            playPromise.catch(err => {
                 console.error('Audio play failed:', err);
+                isPlaying = false;
+                musicBtn.classList.remove('playing');
                 musicBtn.textContent = '❌';
                 setTimeout(() => { musicBtn.textContent = '🎵'; }, 2000);
             });
