@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sanno ❤️ Tere Liye</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400&family=Great+Vibes&family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+    
+    <!-- GSAP + ScrollTrigger -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+    
+    <!-- Three.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    
+    <!-- Typed.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/typed.js/2.0.16/typed.umd.js"></script>
+    
+    <!-- Canvas Confetti -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
+    
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- 3D Floating Hearts Background -->
+    <canvas id="bg-canvas"></canvas>
+
+    <!-- ==================== INTRO ==================== -->
+    <section id="intro" class="section">
+        <div class="stars-container" id="stars"></div>
+        <div class="envelope-wrapper">
+            <div class="envelope" id="envelope">
+                <div class="envelope-flap"></div>
+                <div class="envelope-body">
+                    <div class="letter">
+                        <p>Kuch Kehna Hai 💌</p>
+                    </div>
+                </div>
+            </div>
+            <p class="tap-hint">Tap to Open</p>
+        </div>
+    </section>
+
+    <!-- ==================== HERO ==================== -->
+    <section id="hero" class="section hidden">
+        <div class="hero-content">
+            <p class="hero-pre" id="hero-pre"></p>
+            <h1 class="hero-big">
+                <span id="typed-hero"></span>
+            </h1>
+            <div class="hero-name-row">
+                <span class="hero-dash">—</span>
+                <span class="hero-small">sirf meri</span>
+                <span class="hero-name" id="cyclingName">Sanno</span>
+                <span class="hero-small">ke liye</span>
+                <span class="hero-heart">♥</span>
+            </div>
+            <div class="scroll-hint">
+                <svg width="30" height="50" viewBox="0 0 30 50">
+                    <rect x="1" y="1" width="28" height="48" rx="14" fill="none" stroke="rgba(253,121,168,0.6)" stroke-width="2"/>
+                    <circle cx="15" cy="15" r="4" fill="#fd79a8" class="scroll-dot"/>
+                </svg>
+                <span>Scroll</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== OUR PHOTO ==================== -->
+    <section id="our-photo" class="section hidden">
+        <div class="photo-frame-wrap">
+            <div class="photo-frame">
+                <div class="photo-corner tl"></div>
+                <div class="photo-corner tr"></div>
+                <div class="photo-corner bl"></div>
+                <div class="photo-corner br"></div>
+                <img src="photo.jpg" alt="Abdul Aleem & Sana" class="couple-photo" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%22400%22 height=%22500%22><rect fill=%22%231a0e2e%22 width=%22400%22 height=%22500%22/><text x=%2250%25%22 y=%2245%25%22 font-size=%2240%22 text-anchor=%22middle%22 fill=%22%23fd79a8%22>💑</text><text x=%2250%25%22 y=%2260%25%22 font-size=%2216%22 text-anchor=%22middle%22 fill=%22%23fab1a0%22 font-family=%22Poppins%22>Apni photo yahan lagao</text><text x=%2250%25%22 y=%2270%25%22 font-size=%2212%22 text-anchor=%22middle%22 fill=%22%23888%22 font-family=%22Poppins%22>photo.jpg replace karo</text></svg>'">
+            </div>
+            <p class="photo-caption">Abdul Aleem & Sana 💕</p>
+            <p class="photo-date">Nikah: 21 May 2025</p>
+        </div>
+    </section>
+
+    <!-- ==================== NICKNAMES ==================== -->
+    <section id="nicknames" class="section hidden">
+        <h2 class="sec-title">Tujhe Kya Kya Bulaata Hoon 🥰</h2>
+        <div class="nick-grid">
+            <div class="nick-card"><span class="nick-emoji">🥰</span><span class="nick-name">Sanno</span></div>
+            <div class="nick-card"><span class="nick-emoji">🧸</span><span class="nick-name">Lallu</span></div>
+            <div class="nick-card"><span class="nick-emoji">❤️‍🔥</span><span class="nick-name">Kaleji</span></div>
+            <div class="nick-card"><span class="nick-emoji">👶</span><span class="nick-name">Bacchu</span></div>
+            <div class="nick-card"><span class="nick-emoji">🦋</span><span class="nick-name">Chulbuli</span></div>
+        </div>
+    </section>
+
+    <!-- ==================== QURANIC VERSES ==================== -->
+    <section id="quran" class="section hidden">
+        <h2 class="sec-title">Allah Ka Farmaan 📖</h2>
+        <div class="quran-wrap">
+            <div class="quran-card">
+                <div class="quran-bismillah">بِسمِ اللَّهِ الرَّحمَـنِ الرَّحِيمِ</div>
+                <p class="quran-arabic">وَمِنْ آيَاتِهِ أَنْ خَلَقَ لَكُم مِّنْ أَنفُسِكُمْ أَزْوَاجًا لِّتَسْكُنُوا إِلَيْهَا وَجَعَلَ بَيْنَكُم مَّوَدَّةً وَرَحْمَةً</p>
+                <p class="quran-translation">"Aur uski nishaaniyon mein se hai ki usne tumhare liye tumhi mein se jodiyaan banayi taaki tum unse sukoon paao, aur tumhare beech mawaddat (mohabbat) aur rehmat rakhi."</p>
+                <span class="quran-ref">— Surah Ar-Rum (30:21)</span>
+            </div>
+            <div class="quran-card">
+                <p class="quran-arabic">هُنَّ لِبَاسٌ لَّكُمْ وَأَنتُمْ لِبَاسٌ لَّهُنَّ</p>
+                <p class="quran-translation">"Woh tumhare liye libaas hain aur tum unke liye libaas ho."</p>
+                <span class="quran-ref">— Surah Al-Baqarah (2:187)</span>
+            </div>
+            <div class="quran-card">
+                <p class="quran-arabic">رَبَّنَا هَبْ لَنَا مِنْ أَزْوَاجِنَا وَذُرِّيَّاتِنَا قُرَّةَ أَعْيُنٍ</p>
+                <p class="quran-translation">"Ae hamare Rab! Hume hamare biwiyon aur aulaad se aankh ki thandak ata farma."</p>
+                <span class="quran-ref">— Surah Al-Furqan (25:74)</span>
+            </div>
+        </div>
+        <p class="quran-dua">🤲 Ya Allah, hamare ghar mein barakah rakh. Aameen.</p>
+    </section>
+
+    <!-- ==================== WHY ==================== -->
+    <section id="reasons" class="section hidden">
+        <h2 class="sec-title">Tumse Pyaar Kyun? 💖</h2>
+        <div class="reasons-wrap">
+            <div class="reason-card"><span class="r-icon">🤲</span><p>Allah ne tumhe mere liye chuna — best decision upar waale ka</p></div>
+            <div class="reason-card"><span class="r-icon">🏠</span><p>Tum ghar ho mera — door hoke bhi, paas hoke bhi</p></div>
+            <div class="reason-card"><span class="r-icon">💪</span><p>Itni strong ho — akele sab sambhal leti ho</p></div>
+            <div class="reason-card"><span class="r-icon">🌙</span><p>Tumhari awaaz sunke din ki saari thakaan gayab</p></div>
+            <div class="reason-card"><span class="r-icon">🤰</span><p>Hamari Aanya ko carry kar rahi ho — kitni brave ho tum</p></div>
+            <div class="reason-card"><span class="r-icon">♾️</span><p>Nikah ke baad har din tumse zyada pyaar hota ja raha hai</p></div>
+        </div>
+    </section>
+
+    <!-- ==================== STORY ==================== -->
+    <section id="story" class="section hidden">
+        <h2 class="sec-title">Hamari Kahani ✨</h2>
+        <div class="story-wrap">
+            <div class="story-line"></div>
+            <div class="story-item">
+                <div class="story-dot"></div>
+                <div class="story-card">
+                    <h3>Nikah — 21 May 2025 💍</h3>
+                    <p>Allah ne jo rishta likha tha, woh din aa hi gaya. Tum meri ho gayi — hamesha ke liye.</p>
+                </div>
+            </div>
+            <div class="story-item">
+                <div class="story-dot"></div>
+                <div class="story-card">
+                    <h3>Wo Khidki Wala Pal 🪟</h3>
+                    <p>Jab tumhe lene aaya tha, tum khidki se bula rahi thi. Maine bahar se tumhara haath chua — aur yaqeen nahi ho raha tha ki ye meri biwi hai. Wo moment aaj bhi dil mein hai.</p>
+                </div>
+            </div>
+            <div class="story-item">
+                <div class="story-dot"></div>
+                <div class="story-card">
+                    <h3>Dooriyan, Magar Dil Paas 🌍</h3>
+                    <p>Main Ahmedabad mein akela, tum itni door. Door hoon, magar har call pe lagta hai — tum yahin ho mere paas.</p>
+                </div>
+            </div>
+            <div class="story-item">
+                <div class="story-dot"></div>
+                <div class="story-card">
+                    <h3>Baby Ki Pehli Kick 🤰</h3>
+                    <p>Jab tum batati ho ki Aanya pet mein uchli — kya bataaun kya feel hota hai! Kaash main wahan hota har baar.</p>
+                </div>
+            </div>
+            <div class="story-item">
+                <div class="story-dot"></div>
+                <div class="story-card">
+                    <h3>Aur Ab... Teen Hone Wale Hain 💕</h3>
+                    <p>Hum dono se teen hone wale hain. Allah ka sabse khoobsurat tohfa aa raha hai.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== BABY COUNTDOWN ==================== -->
+    <section id="baby" class="section hidden">
+        <div class="baby-particles" id="baby-particles"></div>
+        <div class="baby-content">
+            <div class="baby-floating-emojis">
+                <span>👶</span><span>🎀</span><span>🍼</span><span>🌸</span><span>💕</span>
+                <span>🧸</span><span>⭐</span><span>🦋</span>
+            </div>
+            
+            <h2 class="baby-title">
+                <span class="baby-name-reveal">Aanya Sidrah</span>
+                <br>Aa Rahi Hai! 🎀
+            </h2>
+            <p class="baby-sub">Hamari princess ka intezaar...</p>
+            
+            <div class="countdown" id="countdown">
+                <div class="cd-box">
+                    <span class="cd-num" id="cd-days">--</span>
+                    <span class="cd-lbl">Din</span>
+                </div>
+                <div class="cd-sep">:</div>
+                <div class="cd-box">
+                    <span class="cd-num" id="cd-hours">--</span>
+                    <span class="cd-lbl">Ghante</span>
+                </div>
+                <div class="cd-sep">:</div>
+                <div class="cd-box">
+                    <span class="cd-num" id="cd-mins">--</span>
+                    <span class="cd-lbl">Minute</span>
+                </div>
+                <div class="cd-sep">:</div>
+                <div class="cd-box">
+                    <span class="cd-num" id="cd-secs">--</span>
+                    <span class="cd-lbl">Second</span>
+                </div>
+            </div>
+
+            <p class="baby-date">📅 15 August 2026 — Independence Day pe double azaadi! 🇮🇳</p>
+
+            <div class="baby-letter">
+                <h3>Dear Aanya Sidrah 💝</h3>
+                <p>Beta, tum abhi aayi nahi ho lekin tumhara Abu door se bhi tumhara intezaar kar raha hai. Jab tumhari Mama batati hai ki tum pet mein uchli ho — kya bataaun, dil kitna khush ho jaata hai! Tumhari Mama bahut brave hai, tumhare liye sab kuch seh rahi hai. Jaldi aana princess, hum tumse milne ke liye beqarar hain.</p>
+                <span class="baby-sign">— Tumhara Abu, Abdul Aleem 💕</span>
+            </div>
+
+            <div class="baby-heartbeat">
+                <svg viewBox="0 0 400 100" class="heartbeat-svg">
+                    <polyline class="heartbeat-line" fill="none" stroke="#fd79a8" stroke-width="2"
+                        points="0,50 40,50 60,50 80,20 100,80 120,30 140,50 160,50 200,50 240,50 260,50 280,20 300,80 320,30 340,50 360,50 400,50"/>
+                </svg>
+                <span class="heartbeat-text">💗 Baby's heartbeat</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== REUNION COUNTDOWN ==================== -->
+    <section id="reunion" class="section hidden">
+        <div class="reunion-content">
+            <h2 class="sec-title">Tumse Milne Ka Intezaar 🚂</h2>
+            <p class="reunion-sub">20 May ko aa raha hoon tumhe lene — bas itne din aur...</p>
+            <div class="countdown reunion-countdown" id="reunion-countdown">
+                <div class="cd-box reunion-box">
+                    <span class="cd-num" id="re-days">--</span>
+                    <span class="cd-lbl">Din</span>
+                </div>
+                <div class="cd-sep">:</div>
+                <div class="cd-box reunion-box">
+                    <span class="cd-num" id="re-hours">--</span>
+                    <span class="cd-lbl">Ghante</span>
+                </div>
+                <div class="cd-sep">:</div>
+                <div class="cd-box reunion-box">
+                    <span class="cd-num" id="re-mins">--</span>
+                    <span class="cd-lbl">Minute</span>
+                </div>
+                <div class="cd-sep">:</div>
+                <div class="cd-box reunion-box">
+                    <span class="cd-num" id="re-secs">--</span>
+                    <span class="cd-lbl">Second</span>
+                </div>
+            </div>
+            <p class="reunion-msg">Ahmedabad ✈️ Varanasi — Phir saath, phir hum 💑</p>
+        </div>
+    </section>
+
+    <!-- ==================== PROMISES ==================== -->
+    <section id="promises" class="section hidden">
+        <h2 class="sec-title">Mere Waade 🤝</h2>
+        <div class="promises-wrap">
+            <div class="promise-row"><span class="p-num">01</span><span>Har roz tumse zyada pyaar karunga</span></div>
+            <div class="promise-row"><span class="p-num">02</span><span>Tumhari safe jagah rahunga, hamesha</span></div>
+            <div class="promise-row"><span class="p-num">03</span><span>Jab ronaa aaye toh hasaaunga</span></div>
+            <div class="promise-row"><span class="p-num">04</span><span>Har toofan mein haath pakadke rakhunga</span></div>
+            <div class="promise-row"><span class="p-num">05</span><span>Jaldi tumhe Ahmedabad le aaunga — ab aur door nahi</span></div>
+            <div class="promise-row"><span class="p-num">06</span><span>Aanya ko duniya ki best zindagi dunga</span></div>
+        </div>
+    </section>
+
+    <!-- ==================== NIKAH ANNIVERSARY ==================== -->
+    <section id="nikah-counter" class="section hidden">
+        <div class="nikah-wrap">
+            <h2 class="sec-title">Hamara Nikah 💍</h2>
+            <p class="nikah-date-text">21 May 2025 se hum saath hain</p>
+            <div class="nikah-timer">
+                <div class="nikah-stat">
+                    <span class="nikah-num" id="nikah-days">--</span>
+                    <span class="nikah-label">Din</span>
+                </div>
+                <div class="nikah-stat">
+                    <span class="nikah-num" id="nikah-months">--</span>
+                    <span class="nikah-label">Mahine</span>
+                </div>
+            </div>
+            <p class="nikah-feels">Aur har din pyaar badh raha hai ❤️</p>
+        </div>
+    </section>
+
+    <!-- ==================== TUM JAANTI HO? ==================== -->
+    <section id="fun-facts" class="section hidden">
+        <h2 class="sec-title">Tum Jaanti Ho? 🤔</h2>
+        <div class="facts-wrap">
+            <div class="fact-card">
+                <span class="fact-icon">📱</span>
+                <p>Tumhari ek call se mera poora din ban jaata hai</p>
+            </div>
+            <div class="fact-card">
+                <span class="fact-icon">🌙</span>
+                <p>Raat ko sone se pehle tumhara chehra sochta hoon</p>
+            </div>
+            <div class="fact-card">
+                <span class="fact-icon">😂</span>
+                <p>Tumhari silly baatein mujhe sabse zyada hasaati hain</p>
+            </div>
+            <div class="fact-card">
+                <span class="fact-icon">🪟</span>
+                <p>Wo khidki wala moment — aaj bhi jab sochta hoon toh smile aa jaati hai</p>
+            </div>
+            <div class="fact-card">
+                <span class="fact-icon">✈️</span>
+                <p>Ahmedabad mein jab bhi akela feel hota hai — tumhe yaad karta hoon aur sab theek</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== SHAYARI ==================== -->
+    <section id="shayari" class="section hidden">
+        <div class="shayari-box">
+            <h2 class="shayari-heading">Tumhare Liye ✍️</h2>
+            <div class="shayari-lines">
+                <p>Na jaanta tha, na pehchaan thi,</p>
+                <p>Bas Allah ki ek nishani thi.</p>
+                <p>Nikah ke baad jab dekha tumhe,</p>
+                <p>Samjha — yeh toh meri kahani thi.</p>
+                <p class="shayari-gap"></p>
+                <p>Door hoon magar dil paas hai,</p>
+                <p>Teri yaad mein har raat khaas hai.</p>
+                <p>Jald aaunga, pakad lunga haath —</p>
+                <p>Bas tera intezaar, aur tera saath.</p>
+                <p class="shayari-gap"></p>
+                <p class="shayari-sig">— Tumhara Abdul Aleem ♥</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== FINALE ==================== -->
+    <section id="finale" class="section hidden">
+        <div class="finale-wrap">
+            <div class="infinity-draw">
+                <svg viewBox="0 0 200 100" class="infinity-svg">
+                    <path class="infinity-path" d="M50,50 C50,20 0,20 0,50 C0,80 50,80 50,50 C50,20 100,20 100,50 C100,80 50,80 50,50" 
+                          transform="translate(50,0)" fill="none" stroke="url(#hg)" stroke-width="3"/>
+                    <defs><linearGradient id="hg"><stop offset="0%" stop-color="#ff6b6b"/><stop offset="100%" stop-color="#ee5a6f"/></linearGradient></defs>
+                </svg>
+            </div>
+            <h2 class="finale-title">
+                Tum meri <span class="f-glow">hamesha</span> ho, <span class="f-name">Sanno</span>
+            </h2>
+            <p class="finale-sub">Aaj, kal, aur hamesha ke liye</p>
+            <div class="finale-family">
+                <span>Abdul Aleem</span>
+                <span class="f-heart">💕</span>
+                <span>Sana</span>
+                <span class="f-heart">💕</span>
+                <span>Aanya Sidrah</span>
+            </div>
+            <div class="finale-beat">❤️</div>
+            <button class="replay-btn" onclick="location.reload()">✨ Phir Se Dekho ✨</button>
+        </div>
+    </section>
+
+    <!-- Music - Muhammad Al Muqit Wedding Nasheed -->
+    <audio id="nasheed-audio" loop preload="auto">
+        <source src="nasheed.mp3" type="audio/mpeg">
+    </audio>
+    <button id="music-btn" class="music-btn">🎵</button>
+
+    <script src="script.js"></script>
+</body>
+</html>
